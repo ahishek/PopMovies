@@ -3,6 +3,7 @@ package com.solo.nair.popmovies;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.ArrayMap;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +25,9 @@ import com.solo.nair.popmovies.network.JsonParamRequest;
 import com.solo.nair.popmovies.utils.MovieListObject;
 import com.solo.nair.popmovies.utils.Utils;
 
-public class MovieListActivity extends AppCompatActivity implements MovieListAdapter.OnItemClickListener, AdapterView.OnItemClickListener{
+public class MovieListActivity extends AppCompatActivity implements MovieListAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener{
+
+    public final int NUMBER_OF_GRIDS = 3;
 
     private RecyclerView mRecylerView;
     private MovieListAdapter mAdapter;
@@ -50,10 +53,10 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
                 R.array.sort_by, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSortBySpinner.setAdapter(adapter);
-        mSortBySpinner.setOnItemClickListener(this);
+        mSortBySpinner.setOnItemSelectedListener(this);
         mImageLoader = new SimpleImageLoader(this);
         mRecylerView = (RecyclerView) findViewById(R.id.movies_grid);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, NUMBER_OF_GRIDS);
         mRecylerView.setLayoutManager(gridLayoutManager);
         mAdapter = new MovieListAdapter(this, mImageLoader);
         mAdapter.setOnItemClickListener(this);
@@ -65,7 +68,11 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!= null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     private void fetchMovieListFromApi() {
@@ -117,15 +124,20 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String itemText = String.valueOf(parent.getItemAtPosition(position));
         String[] array = getResources().getStringArray(R.array.sort_by);
-        if (array.length > 2) {
+        if (array.length > 1) {
             if (itemText.equals(array[0]))
                 mSortByValue = Utils.SortOrder.MOST_POPULAR;
             else if (itemText.equals(array[1]))
                 mSortByValue = Utils.SortOrder.USER_RATING;
         }
         fetchMovieListFromApi();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
