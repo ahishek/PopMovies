@@ -1,8 +1,8 @@
 package com.solo.nair.popmovies.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -36,15 +36,6 @@ public class MovieInfoActivity extends AppCompatActivity {
         initToolbar();
         initControls();
         setData();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Open Share Bottomsheet", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private void setData() {
@@ -68,6 +59,23 @@ public class MovieInfoActivity extends AppCompatActivity {
         mReleaseDate = (TextView) findViewById(R.id.movie_release_date_tv);
         mUserRating = (TextView) findViewById(R.id.movie_rating_tv);
         mOverview = (TextView) findViewById(R.id.movie_overview_tv);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        if (fab != null)
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sendShareIntent();
+                }
+            });
+    }
+
+    private void sendShareIntent() {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, mMovieObject.getTitle());
+        sendIntent.putExtra(Intent.EXTRA_TEXT, mMovieObject.getPlotOverview());
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
     }
 
     private void initToolbar() {
