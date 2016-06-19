@@ -4,14 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.solo.nair.popmovies.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:paddingTop="@dimen/spacing_60"
+        android:paddingLeft="@dimen/spacing_24"
+        android:paddingRight="@dimen/spacing_24">
+
+        <ImageView
+            android:layout_width="@dimen/spacing_190"
+            android:layout_height="@dimen/spacing_190"
+            android:src="@drawable/ic_home_movies"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome_msg"
+            android:padding="@dimen/spacing_12"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/font_size_xxxl"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_60"
+            android:layout_marginBottom="@dimen/spacing_60"
+            android:layout_gravity="bottom"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/click_msg"/>
+
+    </LinearLayout>
 </RelativeLayout>
