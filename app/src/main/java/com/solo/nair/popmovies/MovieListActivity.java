@@ -29,7 +29,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
 
     public final int NUMBER_OF_GRIDS = 3;
 
-    private RecyclerView mRecylerView;
+    private RecyclerView mRecyclerView;
     private MovieListAdapter mAdapter;
     private SimpleImageLoader mImageLoader;
     private View mLoadingView;
@@ -55,12 +55,13 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         mSortBySpinner.setAdapter(adapter);
         mSortBySpinner.setOnItemSelectedListener(this);
         mImageLoader = new SimpleImageLoader(this);
-        mRecylerView = (RecyclerView) findViewById(R.id.movies_grid);
+        mRecyclerView = (RecyclerView) findViewById(R.id.movies_grid);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, NUMBER_OF_GRIDS);
-        mRecylerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         mAdapter = new MovieListAdapter(this, mImageLoader);
         mAdapter.setOnItemClickListener(this);
-        mRecylerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(onScrollListener);
         mSortByValue = Utils.SortOrder.MOST_POPULAR;
         mLoadingView = findViewById(R.id.loading_view);
     }
@@ -140,4 +141,16 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_SETTLING) {
+                mImageLoader.stopProcessingQueue();
+            } else {
+                mImageLoader.startProcessingQueue();
+            }
+        }
+    };
 }
