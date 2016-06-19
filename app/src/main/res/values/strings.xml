@@ -103,6 +103,7 @@
     <string name="avg_user_rating">Avg. User Rating:</string>
 
     <string name="rating_string">%1$s/10</string>
+    <string name="movieDB_title">The Movie Db</string>
 
     <string-array name="sort_by">
         <item>Most Popular</item>

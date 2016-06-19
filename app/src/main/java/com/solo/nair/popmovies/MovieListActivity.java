@@ -77,6 +77,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.movieDB_title));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar!= null) {

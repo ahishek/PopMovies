@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="100dp"
-    android:layout_height="wrap_content"
+    android:layout_height="150dp"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="@dimen/spacing_8"
     android:layout_marginBottom="@dimen/activity_horizontal_margin">
@@ -19,6 +19,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_home_movies"
+            android:layout_weight="1"
             android:scaleType="centerCrop" />
 
         <TextView
