@@ -104,6 +104,8 @@
 
     <string name="rating_string">%1$s/10</string>
     <string name="movieDB_title">The Movie Db</string>
+    <string name="try_again">Try Again</string>
+    <string name="something_went_wrong">Uh, oh! Something seems to have gone wrong! :( \nWhy don\'t you try again?</string>
 
     <string-array name="sort_by">
         <item>Most Popular</item>

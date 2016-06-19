@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +31,8 @@ import java.util.ArrayList;
 
 import xyz.hanks.library.SmallBang;
 
-public class MovieListActivity extends AppCompatActivity implements MovieListAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener {
+public class MovieListActivity extends AppCompatActivity implements MovieListAdapter.OnItemClickListener,
+        AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     public final int NUMBER_OF_GRIDS = 3;
 
@@ -38,6 +40,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     private MovieListAdapter mAdapter;
     private SimpleImageLoader mImageLoader;
     private View mLoadingView;
+    private View mErrorView;
     private int mSortByValue;
     private final String MOST_POPULAR = "popularity.desc";
     private final String USER_RATING = "vote_average.desc";
@@ -84,6 +87,9 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         mRecyclerView.addOnScrollListener(onScrollListener);
         mSortByValue = Utils.SortOrder.MOST_POPULAR;
         mLoadingView = findViewById(R.id.loading_view);
+        mErrorView = findViewById(R.id.error_container);
+        AppCompatButton retryBtn = (AppCompatButton) mErrorView.findViewById(R.id.btn_retry);
+        retryBtn.setOnClickListener(this);
     }
 
     private void initToolbar() {
@@ -118,7 +124,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                mErrorView.setVisibility(View.VISIBLE);
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -188,5 +194,14 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(Utils.BUNDLE_DATA, mAdapter.getData());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_retry:
+                fetchMovieListFromApi(false);
+                break;
+        }
     }
 }
