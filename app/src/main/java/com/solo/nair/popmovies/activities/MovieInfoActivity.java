@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,14 +26,19 @@ public class MovieInfoActivity extends AppCompatActivity {
     private TextView mUserRating;
     private TextView mOverview;
     private SimpleImageLoader mImageLoader;
+    private View mOverViewLl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_info);
-        Bundle args = getIntent().getExtras();
-        if (args != null)
-            mMovieObject = args.getParcelable(Utils.BUNDLE_MOVIE_OBJECT);
+        if (savedInstanceState != null) {
+            mMovieObject = savedInstanceState.getParcelable(Utils.BUNDLE_MOVIE_OBJECT);
+        } else {
+            Bundle args = getIntent().getExtras();
+            if (args != null)
+                mMovieObject = args.getParcelable(Utils.BUNDLE_MOVIE_OBJECT);
+        }
         initToolbar();
         initControls();
         setData();
@@ -47,7 +53,10 @@ public class MovieInfoActivity extends AppCompatActivity {
                     0);
             mImageLoader.get(Utils.getPosterUrl(mMovieObject.getBackdropPath(), true), mBackDropImage,
                     0);
-            mOverview.setText(mMovieObject.getPlotOverview());
+            if (!TextUtils.isEmpty(mMovieObject.getPlotOverview()))
+                mOverview.setText(mMovieObject.getPlotOverview());
+            else
+                mOverViewLl.setVisibility(View.GONE);
         }
     }
 
@@ -59,6 +68,7 @@ public class MovieInfoActivity extends AppCompatActivity {
         mReleaseDate = (TextView) findViewById(R.id.movie_release_date_tv);
         mUserRating = (TextView) findViewById(R.id.movie_rating_tv);
         mOverview = (TextView) findViewById(R.id.movie_overview_tv);
+        mOverViewLl = findViewById(R.id.overview_ll);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null)
             fab.setOnClickListener(new View.OnClickListener() {
@@ -80,18 +90,26 @@ public class MovieInfoActivity extends AppCompatActivity {
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (mMovieObject != null)
-            toolbar.setTitle(mMovieObject.getOriginalTitle());
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar!= null && toolbar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+        if (toolbar != null) {
+            if (mMovieObject != null)
+                toolbar.setTitle(mMovieObject.getOriginalTitle());
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+            }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Utils.BUNDLE_MOVIE_OBJECT, mMovieObject);
     }
 }

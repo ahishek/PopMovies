@@ -14,6 +14,7 @@ public class Utils {
     public static final String IMAGE_SIZE_LARGE = "/w500";
 
     public static final String BUNDLE_MOVIE_OBJECT = "movie_object";
+    public static final String BUNDLE_DATA = "data_object";
 
     public static class SortOrder {
         public static final int MOST_POPULAR = 1;

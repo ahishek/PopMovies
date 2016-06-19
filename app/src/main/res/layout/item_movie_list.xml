@@ -3,8 +3,8 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
-    android:layout_width="100dp"
-    android:layout_height="150dp"
+    android:layout_width="@dimen/spacing_110"
+    android:layout_height="@dimen/spacing_150"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="@dimen/spacing_2"
     android:layout_marginBottom="@dimen/activity_horizontal_margin">
@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/movie_photo"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/spacing_100"
             android:src="@drawable/ic_home_movies"
             android:layout_weight="1"
             android:scaleType="centerCrop" />

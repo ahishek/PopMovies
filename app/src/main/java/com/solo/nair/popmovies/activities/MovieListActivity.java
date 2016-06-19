@@ -2,8 +2,8 @@ package com.solo.nair.popmovies.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,9 +26,11 @@ import com.solo.nair.popmovies.network.JsonParamRequest;
 import com.solo.nair.popmovies.utils.MovieListObject;
 import com.solo.nair.popmovies.utils.Utils;
 
+import java.util.ArrayList;
+
 import xyz.hanks.library.SmallBang;
 
-public class MovieListActivity extends AppCompatActivity implements MovieListAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener{
+public class MovieListActivity extends AppCompatActivity implements MovieListAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     public final int NUMBER_OF_GRIDS = 3;
 
@@ -49,7 +51,12 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         setContentView(R.layout.activity_movie_list);
         initToolbar();
         initControls();
-        fetchMovieListFromApi(false);
+        if (savedInstanceState != null) {
+            ArrayList<MovieListObject.Result> data = savedInstanceState.getParcelableArrayList(Utils.BUNDLE_DATA);
+            mAdapter.setData(data, true);
+        } else {
+            fetchMovieListFromApi(false);
+        }
     }
 
     private void initControls() {
@@ -81,12 +88,17 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.movieDB_title));
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar!= null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
+        if (toolbar != null) {
+            toolbar.setTitle(getString(R.string.movieDB_title));
+            toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+            toolbar.setNavigationIcon(ContextCompat.getDrawable(this, R.drawable.ic_back_arrow));
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
     }
 
@@ -171,4 +183,10 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
             }
         }
     };
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(Utils.BUNDLE_DATA, mAdapter.getData());
+    }
 }

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.solo.nair.popmovies.MovieListActivity">
+    tools:context="com.solo.nair.popmovies.activities.MovieListActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:title="@string/movies"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/spacing_50"
             android:orientation="horizontal">
 
             <TextView
@@ -39,8 +39,8 @@
 
             <Spinner
                 android:id="@+id/sort_by_spinner"
-                android:layout_width="300dp"
-                android:layout_height="50dp"/>
+                android:layout_width="@dimen/spacing_200"
+                android:layout_height="@dimen/spacing_50"/>
 
         </LinearLayout>
 
@@ -49,8 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/spacing_30"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
     </LinearLayout>

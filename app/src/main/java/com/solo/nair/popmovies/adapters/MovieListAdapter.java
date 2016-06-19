@@ -47,6 +47,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Post
         }
     }
 
+    public ArrayList<MovieListObject.Result> getData() {
+        return this.mMoviesList;
+    }
+
     public interface OnItemClickListener {
         void onItemClick(View view, MovieListObject.Result movieObject);
     }
