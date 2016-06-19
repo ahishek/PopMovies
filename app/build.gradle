@@ -29,4 +29,5 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.google.code.gson:gson:+'
     compile 'dev.dworks.libs:volleyplus:0.1.3'
+    compile 'hanks.xyz:smallbang-library:0.1.2'
 }

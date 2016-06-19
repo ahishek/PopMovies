@@ -26,6 +26,8 @@ import com.solo.nair.popmovies.network.JsonParamRequest;
 import com.solo.nair.popmovies.utils.MovieListObject;
 import com.solo.nair.popmovies.utils.Utils;
 
+import xyz.hanks.library.SmallBang;
+
 public class MovieListActivity extends AppCompatActivity implements MovieListAdapter.OnItemClickListener, AdapterView.OnItemSelectedListener{
 
     public final int NUMBER_OF_GRIDS = 3;
@@ -40,6 +42,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     private Spinner mSortBySpinner;
     private int pageCount;
     private View mFooterLoadingView;
+    private SmallBang mSmallBang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     }
 
     private void initControls() {
+        mSmallBang = SmallBang.attach2Window(this);
         mSortBySpinner = (Spinner) findViewById(R.id.sort_by_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sort_by, android.R.layout.simple_spinner_item);
@@ -67,7 +71,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
                 fetchMovieListFromApi(true);
             }
         });
-        mAdapter = new MovieListAdapter(this, mImageLoader);
+        mAdapter = new MovieListAdapter(this, mImageLoader, mSmallBang);
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(onScrollListener);

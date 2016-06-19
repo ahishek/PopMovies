@@ -45,7 +45,6 @@ public class MovieInfoActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setData() {
@@ -77,9 +76,14 @@ public class MovieInfoActivity extends AppCompatActivity {
             toolbar.setTitle(mMovieObject.getOriginalTitle());
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar!= null) {
+        if (actionBar!= null && toolbar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
     }
 }

@@ -15,6 +15,8 @@ import com.solo.nair.popmovies.utils.Utils;
 
 import java.util.ArrayList;
 
+import xyz.hanks.library.SmallBang;
+
 /**
  * Created by abhisheknair on 19/06/16.
  */
@@ -24,11 +26,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Post
     private Context mContext;
     private ArrayList<MovieListObject.Result> mMoviesList;
     private OnItemClickListener mItemClickListener;
+    private SmallBang mSmallBang;
 
-    public MovieListAdapter(Context context, SimpleImageLoader imageLoader) {
+    public MovieListAdapter(Context context, SimpleImageLoader imageLoader, SmallBang smallBang) {
         this.mImageLoader = imageLoader;
         this.mContext = context;
         this.mMoviesList = new ArrayList<>();
+        this.mSmallBang = smallBang;
     }
 
     public void setData(ArrayList<MovieListObject.Result> list, boolean fromLoadMore) {
@@ -77,6 +81,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Post
         public PosterViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            mSmallBang.bang(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.movie_photo);
             title = (TextView) itemView.findViewById(R.id.movie_name);
         }
