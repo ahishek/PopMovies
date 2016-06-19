@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -18,22 +18,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MovieListActivity"
+            android:name=".activities.MovieListActivity"
             android:label="@string/title_activity_movie_list"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".activities.MainActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.solo.nair.popmovies.MainActivity"/>
+                android:value="com.solo.nair.popmovies.activities.MainActivity"/>
         </activity>
         <activity
             android:name=".activities.MovieInfoActivity"
             android:label="@string/title_activity_movie_info"
-            android:parentActivityName=".MovieListActivity"
+            android:parentActivityName=".activities.MovieListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.solo.nair.popmovies.MovieListActivity"/>
+                android:value="com.solo.nair.popmovies.activities.MovieListActivity"/>
         </activity>
     </application>
 

@@ -1,4 +1,4 @@
-package com.solo.nair.popmovies;
+package com.solo.nair.popmovies.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.cache.plus.SimpleImageLoader;
 import com.android.volley.error.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.solo.nair.popmovies.activities.MovieInfoActivity;
+import com.solo.nair.popmovies.R;
 import com.solo.nair.popmovies.adapters.EndlessRecyclerViewScrollListener;
 import com.solo.nair.popmovies.adapters.MovieListAdapter;
 import com.solo.nair.popmovies.network.JsonParamRequest;
