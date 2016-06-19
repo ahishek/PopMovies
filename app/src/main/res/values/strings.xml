@@ -98,6 +98,11 @@
     <string name="movies">Movies</string>
     <string name="title_activity_movie_info">MovieInfoActivity</string>
     <string name="sort_by">Sort By</string>
+    <string name="overview">Overview</string>
+    <string name="release_date">Release Date:</string>
+    <string name="avg_user_rating">Avg. User Rating:</string>
+
+    <string name="rating_string">%1$s/10</string>
 
     <string-array name="sort_by">
         <item>Most Popular</item>

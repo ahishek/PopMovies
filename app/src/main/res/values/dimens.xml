@@ -11,7 +11,8 @@
 
     <dimen name="font_size_small">12sp</dimen>
     <dimen name="font_size_medium">14sp</dimen>
-    <dimen name="font_size_large">16dp</dimen>
+    <dimen name="font_size_large">18sp</dimen>
+    <dimen name="font_size_xlarge">20sp</dimen>
     <dimen name="font_size_xxxl">30sp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>

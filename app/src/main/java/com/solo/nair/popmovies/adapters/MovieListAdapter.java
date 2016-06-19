@@ -90,13 +90,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Post
 
         public void setMovieData(MovieListObject.Result result) {
             movieObject = result;
-            mImageLoader.get(getPosterUrl(result.getPosterPath()), imageView,
+            mImageLoader.get(Utils.getPosterUrl(result.getPosterPath(), false), imageView,
                     0);
             title.setText(result.getOriginalTitle());
         }
 
-        private String getPosterUrl(String posterPath) {
-            return Utils.BASE_IMAGE_URL + Utils.IMAGE_SIZE_MOBILE + posterPath;
-        }
     }
 }

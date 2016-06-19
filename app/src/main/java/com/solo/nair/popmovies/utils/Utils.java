@@ -19,4 +19,11 @@ public class Utils {
         public static final int MOST_POPULAR = 1;
         public static final int USER_RATING = 2;
     }
+
+    public static String getPosterUrl(String posterPath, boolean size) {
+        if (size)
+            return BASE_IMAGE_URL + IMAGE_SIZE_LARGE + posterPath;
+        else
+            return BASE_IMAGE_URL + IMAGE_SIZE_MOBILE + posterPath;
+    }
 }

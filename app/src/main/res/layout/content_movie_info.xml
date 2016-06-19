@@ -9,10 +9,114 @@
     tools:context="com.solo.nair.popmovies.activities.MovieInfoActivity"
     tools:showIn="@layout/activity_movie_info">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text"/>
+        android:orientation="vertical"
+        app:divider="@drawable/data_divider"
+        app:showDividers="beginning|middle|end">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/movie_image_thumbnail_iv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/spacing_8"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/movie_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_8"
+                    android:textSize="@dimen/font_size_xlarge"
+                    android:textColor="@android:color/black"
+                    tools:text="Zootopia"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_8"
+                        android:textSize="@dimen/font_size_medium"
+                        android:text="@string/release_date"/>
+
+                    <TextView
+                        android:id="@+id/movie_release_date_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_8"
+                        android:textSize="@dimen/font_size_medium"
+                        android:textColor="@android:color/black"
+                        tools:text="2016-03-10"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_8"
+                        android:textSize="@dimen/font_size_medium"
+                        android:text="@string/avg_user_rating"/>
+
+                    <TextView
+                        android:id="@+id/movie_rating_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing_8"
+                        android:textSize="@dimen/font_size_medium"
+                        android:textColor="@android:color/black"
+                        tools:text="7.1/10"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_8"
+                android:textSize="@dimen/font_size_medium"
+                android:text="@string/overview"/>
+
+            <TextView
+                android:id="@+id/movie_overview_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="@dimen/spacing_8"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/font_size_medium"
+                tools:text="@string/large_text"
+            />
+        </LinearLayout>
+
+    </android.support.v7.widget.LinearLayoutCompat>
 
 </android.support.v4.widget.NestedScrollView>
