@@ -6,7 +6,7 @@
     android:layout_width="100dp"
     android:layout_height="150dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardCornerRadius="@dimen/spacing_8"
+    card_view:cardCornerRadius="@dimen/spacing_2"
     android:layout_marginBottom="@dimen/activity_horizontal_margin">
 
     <LinearLayout
@@ -16,7 +16,7 @@
 
         <ImageView
             android:id="@+id/movie_photo"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="100dp"
             android:src="@drawable/ic_home_movies"
             android:layout_weight="1"

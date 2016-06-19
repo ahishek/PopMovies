@@ -41,7 +41,6 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     private final String USER_RATING = "vote_average.desc";
     private Spinner mSortBySpinner;
     private int pageCount;
-    private View mFooterLoadingView;
     private SmallBang mSmallBang;
 
     @Override
@@ -55,6 +54,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
 
     private void initControls() {
         mSmallBang = SmallBang.attach2Window(this);
+        pageCount = 1;
         mSortBySpinner = (Spinner) findViewById(R.id.sort_by_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.sort_by, android.R.layout.simple_spinner_item);
@@ -93,20 +93,14 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     private void fetchMovieListFromApi(final boolean isLoadMore) {
         if (!isLoadMore)
             mLoadingView.setVisibility(View.VISIBLE);
-//        else
-//            mFooterLoadingView.setVisibility(View.VISIBLE);
         JsonParamRequest<MovieListObject> request = new JsonParamRequest<MovieListObject>(Request.Method.GET,
                 Utils.BASE_API_URL + Utils.MOVIES_LIST_ENDPOINT, MovieListObject.class,
                 getParams(isLoadMore), new Response.Listener<MovieListObject>() {
 
             @Override
             public void onResponse(MovieListObject response) {
-                if (!isLoadMore) {
+                if (!isLoadMore)
                     mLoadingView.setVisibility(View.GONE);
-                    pageCount = response.getPage();
-                }
-//                else
-//                    mFooterLoadingView.setVisibility(View.VISIBLE);
                 setRecylerViewData(response, isLoadMore);
             }
         }, new Response.ErrorListener() {
