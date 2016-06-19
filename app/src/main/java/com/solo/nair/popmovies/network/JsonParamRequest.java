@@ -36,7 +36,7 @@ public class JsonParamRequest<T> extends JsonRequest<T> {
 
     @Override
     public Map<String, String> getParams() throws AuthFailureError {
-        return params != null ? params : super.getHeaders();
+        return params != null ? params : super.getParams();
     }
 
     @Override

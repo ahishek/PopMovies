@@ -103,6 +103,5 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Post
                     0);
             title.setText(result.getOriginalTitle());
         }
-
     }
 }
