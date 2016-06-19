@@ -39,7 +39,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Post
             if (!fromLoadMore)
                 notifyDataSetChanged();
             else
-                notifyItemRangeInserted(getItemCount(), list.size());
+                notifyItemRangeInserted(getItemCount(), list.size() -1);
         }
     }
 

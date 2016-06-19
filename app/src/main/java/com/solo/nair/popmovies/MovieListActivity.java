@@ -20,6 +20,7 @@ import com.android.volley.cache.plus.SimpleImageLoader;
 import com.android.volley.error.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.solo.nair.popmovies.activities.MovieInfoActivity;
+import com.solo.nair.popmovies.adapters.EndlessRecyclerViewScrollListener;
 import com.solo.nair.popmovies.adapters.MovieListAdapter;
 import com.solo.nair.popmovies.network.JsonParamRequest;
 import com.solo.nair.popmovies.utils.MovieListObject;
@@ -37,6 +38,8 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
     private final String MOST_POPULAR = "popularity.desc";
     private final String USER_RATING = "vote_average.desc";
     private Spinner mSortBySpinner;
+    private int pageCount;
+    private View mFooterLoadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         setContentView(R.layout.activity_movie_list);
         initToolbar();
         initControls();
-        fetchMovieListFromApi();
+        fetchMovieListFromApi(false);
     }
 
     private void initControls() {
@@ -58,6 +61,12 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         mRecyclerView = (RecyclerView) findViewById(R.id.movies_grid);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, NUMBER_OF_GRIDS);
         mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                fetchMovieListFromApi(true);
+            }
+        });
         mAdapter = new MovieListAdapter(this, mImageLoader);
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
@@ -76,16 +85,24 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         }
     }
 
-    private void fetchMovieListFromApi() {
-        mLoadingView.setVisibility(View.VISIBLE);
+    private void fetchMovieListFromApi(final boolean isLoadMore) {
+        if (!isLoadMore)
+            mLoadingView.setVisibility(View.VISIBLE);
+//        else
+//            mFooterLoadingView.setVisibility(View.VISIBLE);
         JsonParamRequest<MovieListObject> request = new JsonParamRequest<MovieListObject>(Request.Method.GET,
                 Utils.BASE_API_URL + Utils.MOVIES_LIST_ENDPOINT, MovieListObject.class,
-                getParams(), new Response.Listener<MovieListObject>() {
+                getParams(isLoadMore), new Response.Listener<MovieListObject>() {
 
             @Override
             public void onResponse(MovieListObject response) {
-                mLoadingView.setVisibility(View.GONE);
-                setRecylerViewData(response);
+                if (!isLoadMore) {
+                    mLoadingView.setVisibility(View.GONE);
+                    pageCount = response.getPage();
+                }
+//                else
+//                    mFooterLoadingView.setVisibility(View.VISIBLE);
+                setRecylerViewData(response, isLoadMore);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -97,11 +114,11 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
         requestQueue.add(request);
     }
 
-    private void setRecylerViewData(MovieListObject response) {
-        mAdapter.setData(response.getResults(), false);
+    private void setRecylerViewData(MovieListObject response, boolean isLoadMore) {
+        mAdapter.setData(response.getResults(), isLoadMore);
     }
 
-    public ArrayMap<String, String> getParams() {
+    public ArrayMap<String, String> getParams(boolean isLoadMore) {
         ArrayMap<String, String> params = new ArrayMap<>();
         params.put("api_key", Utils.API_KEY);
         switch (mSortByValue) {
@@ -112,6 +129,8 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
             case Utils.SortOrder.USER_RATING:
                 params.put("sort_by", USER_RATING);
         }
+        if (isLoadMore)
+            params.put("page", String.valueOf(pageCount++));
         return params;
     }
 
@@ -134,7 +153,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListAda
             else if (itemText.equals(array[1]))
                 mSortByValue = Utils.SortOrder.USER_RATING;
         }
-        fetchMovieListFromApi();
+        fetchMovieListFromApi(false);
     }
 
     @Override
