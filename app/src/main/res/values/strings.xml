@@ -96,4 +96,11 @@
     <string name="action_settings">Settings</string>
     <string name="loading_movies">Fetching the latest movies for you...</string>
     <string name="movies">Movies</string>
+    <string name="title_activity_movie_info">MovieInfoActivity</string>
+    <string name="sort_by">Sort By</string>
+
+    <string-array name="sort_by">
+        <item>Most Popular</item>
+        <item>User Rating</item>
+    </string-array>
 </resources>
